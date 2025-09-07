@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>Document</title>
-</head>
-<body>
-     <h1>HELLO</h1>
-</body>
+  </head>
+  <body>
+    <div class="messageBoard">
+      <% for(let user of messages){%>
+      <div class="messageCont">
+
+         <% let userColors = ["#68a4a5","dc3a70","cad4df","#cdbca8","#713519","#9681ac","#cee6f2"] 
+        
+           const randomNum = Math.floor(Math.random()*userColors.length)
+           let randomColor = userColors[randomNum]
+           
+        %>
+
+        <div class="profileCont" style="background-color: <%= randomColor %>;" >
+          <div class="icon"><%=user.user[0].toUpperCase() %></div>
+        </div>
+
+
+        <div class="message">
+          
+          <% let date = user.added 
+          const options={ month :"short", day
+          :"2-digit", hour :"numeric", minute :"2-digit", hour12 :true} 
+          let formatted = date.toLocaleString("en-US",options)%>
+          <h1 class="msg"><%=user.text%></h1>
+          <p class="date"><%= formatted %></p>
+        </div>
+      </div>
+
+      <%}%>
+
+     
+      <a href="/new" class="sendMsg sendText">Send Message</a>
+
+    </div>
+  </body>
 </html>
