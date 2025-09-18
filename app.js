@@ -1,11 +1,15 @@
 const express = require("express");
 const app = express();
 const path = require("node:path");
-const port = process.env.PORT||3000;
+const port = process.env.PORT || 3000;
+
+require('dotenv').config()
 
 const router = express.Router();
 
 const sendMsgRouter = require("./routes/sendMsg");
+
+const db = require("./db/queries.js");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -15,24 +19,10 @@ app.use(express.static("public"));
 
 app.use(express.urlencoded({ extended: true }));
 
-// users
-const messages = [
-  {
-    text: "Hi there!",
-    user: "Amando",
-    added: new Date(),
-  },
-  {
-    text: "Hello World!",
-    user: "Charles",
-    added: new Date(),
-  },
-];
-
-app.locals.messages = messages;
-
-app.get("/", (req, res) => {
-  res.render("index", { messages: messages });
+app.get("/", async (req, res) => {
+  const messages = await db.getMsg();
+  console.log(messages)
+  res.render("index", { messages });
 });
 
 app.use("/new", sendMsgRouter);
