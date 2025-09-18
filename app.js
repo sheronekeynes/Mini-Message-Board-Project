@@ -3,7 +3,7 @@ const app = express();
 const path = require("node:path");
 const port = process.env.PORT || 3000;
 
-require('dotenv').config()
+require("dotenv").config();
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
   const messages = await db.getMsg();
-  console.log(messages)
+  console.log(messages);
   res.render("index", { messages });
 });
 
